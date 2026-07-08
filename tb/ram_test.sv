@@ -6,9 +6,10 @@ program automatic ram_test(ram_interface vif);
 	ram_environment env;
 
 	initial begin
-		env = new(vif.DRV);
+		env = new(vif.DRV, vif.REF, vif.MON);
 		env.build();
 		env.run();
+		repeat(2) @(vif.mon_cb);
 		$finish;
 	end
 

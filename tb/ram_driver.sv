@@ -24,6 +24,20 @@ class ram_driver;
 		repeat(`num_transactions) begin
 			@(vif.drv_cb);
 			mbx_gen_drv.get(tr);
+			if(vif.reset == 0) begin
+				vif.drv_cb.data_in <= {`DATA_WIDTH{1'bz}};
+				vif.drv_cb.write_enb <= 1'b0;
+				vif.drv_cb.read_enb <= 1'b0;
+				vif.drv_cb.address <= {ADDR_WIDTH{1'bz}};
+			end
+			else begin
+				vif.drv_cb.data_in <= tr.data_in;
+				vif.drv_cb.write_enb <= tr.write_enb;
+				vif.drv_cb.read_enb <= tr.read_enb;
+				vif.drv_cb.address <= tr.address;
+		   	@(vif.drv_cb);	
+			end
+			mbx_drv_ref.put(tr);
 			$display("[DRIVER/Mailbox_Object]", $time," %p", tr);
 		end
 	endtask

@@ -6,8 +6,12 @@ class ram_transaction;
 	rand bit read_enb;
 	rand bit [ADDR_WIDTH-1:0] address;
 
+	// ram output signal
+	logic [`DATA_WIDTH] data_out;
+
 	constraint rd_wr_constraint {
-		{read_enb, write_enb} inside {[0:2]};
+		//{read_enb, write_enb} inside {[0:2]};
+		read_enb != write_enb;
 	}
 
 	function ram_transaction copy();

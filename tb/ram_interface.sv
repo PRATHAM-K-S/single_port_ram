@@ -15,7 +15,7 @@ interface ram_interface(input bit clk, input bit reset);
 	clocking drv_cb @(posedge clk);
 		
 		// input and output skew
-		default output #2;
+		default output #1;
 
 		// signal directions
 		output data_in;
@@ -29,18 +29,20 @@ interface ram_interface(input bit clk, input bit reset);
 	clocking mon_cb @(posedge clk);
 		
 		// input skew
-		default input #2;
+		default input #1;
 
 		// signal directions
 		input data_in;
 		input write_enb;
 		input read_enb;
 		input address;
+		input data_out;
 
 	endclocking
 
 	// signal direction rules
 	modport DRV(clocking drv_cb, input reset);
 	modport MON(clocking mon_cb, input reset);
+	modport REF(input reset);
 
 endinterface
