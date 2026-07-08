@@ -2,3 +2,6 @@ csrc/
 simv
 simv.daidir/
 ucli.key
+simv.vdb/
+.fsm.sch.verilog.xml
+cm.log
