@@ -10,8 +10,8 @@ class ram_transaction;
 	logic [`DATA_WIDTH] data_out;
 
 	constraint rd_wr_constraint {
-		//{read_enb, write_enb} inside {[0:2]};
-		read_enb != write_enb;
+		{read_enb, write_enb} inside {[0:3]};
+		//read_enb != write_enb;
 	}
 
 	function ram_transaction copy();

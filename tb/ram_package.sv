@@ -3,7 +3,7 @@ package ram_package;
 	`define DATA_WIDTH 8
 	`define DATA_DEPTH 32
 
-	`define num_transactions 8
+	`define num_transactions 128
 
 	// function to calculate address bit width
 	function int log2(int n);

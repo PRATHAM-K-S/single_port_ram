@@ -13,7 +13,9 @@ module ram_top;
 	initial begin
 		reset = 0;
 		repeat(2) @(posedge clk);
-		reset =1;
+		reset = 1;
+		reset = 0;
+		reset = 1;
 	end
 
 	ram_interface infc(clk,reset);

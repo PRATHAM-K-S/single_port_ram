@@ -9,7 +9,15 @@ class ram_driver;
 
 	// virtual interface
 	virtual ram_interface.DRV vif;
-
+	
+	// input coverage group
+	covergroup drv_cg;
+		write: coverpoint tr.write_enb {bins wrt[] = {0,1};}
+		read: coverpoint tr.read_enb {bins rd[] = {0,1};}
+		data_in: coverpoint tr.data_in {bins data = {[0:255]};} 
+		address: coverpoint tr.data_in {bins address = {[0:31]};}
+	endgroup
+	
 	function new(
 		mailbox #(ram_transaction) mbx_gen_drv,
 		mailbox #(ram_transaction) mbx_drv_ref,
@@ -18,6 +26,7 @@ class ram_driver;
 		this.mbx_gen_drv = mbx_gen_drv;
 		this.mbx_drv_ref = mbx_drv_ref;
 		this.vif = vif;
+		drv_cg = new;
 	endfunction
 
 	task run();
@@ -38,8 +47,10 @@ class ram_driver;
 		   	@(vif.drv_cb);	
 			end
 			mbx_drv_ref.put(tr);
+			drv_cg.sample();
 			$display("[DRIVER/Mailbox_Object]", $time," %p", tr);
 		end
+		$display("[DRIVER/INPUT_COVERAGE] %0d",drv_cg.get_coverage());
 	endtask
 
 endclass
